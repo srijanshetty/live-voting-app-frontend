@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3><%- question %></h3>
+      </div>
+      <div class="panel-body">
+        <% _.each(options, function(elem, i) { %>
+          <div class="col-md-6 col-sm-12" style="padding:15px;border:1px solid #ccc;">
+            <span><b><%- elem %></b></span>
+            <button class="pull-right q-vote" data-qid="<%- qid %>" data-option="<%- elem %>">Vote</button>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>

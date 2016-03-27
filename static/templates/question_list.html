@@ -1,0 +1,7 @@
+<div class="row">
+  <% _.each(list, function(elem) { %>
+    <div class="col-sm-12 alert alert-info mb pb pt pointer" onclick="get_question('<%- elem.qid %>', '#logged-in', 'question')">
+      <%- elem.question %>
+    </div>
+  <% }) %>
+</div>

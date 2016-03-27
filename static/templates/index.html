@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-4 col-sm-12 pointer bg-success go-trigger same-height" go-template="create">
+    <h2 class="text-center">Create Question</h2>
+  </div>
+  <div class="col-md-4 col-sm-12 pointer bg-warning pointer same-height" onclick="get_questions('#logged-in', 'question_list')">
+    <h2 class="text-center">See Question</h2>
+  </div>
+  <div class="col-md-4 col-sm-12 bg-info text-center same-height">
+    <h2 class="text-center pointer" onclick="vote_question()">Vote!</h2>
+    <br>
+    <input type="text" class="form-control mb" id="view-question" placeholder="UID">
+  </div>
+</div>

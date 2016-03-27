@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' 128.199.251.96:5000 'unsafe-inline' 'unsafe-eval'">
+
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <title>Shell Internal Survey</title>
+    </head>
+    <body>
+        <div class="container">
+          <div class="row mb">
+            <div class="span16 text-center">
+              <h1>Shell Internal Survey</h1>
+            </div>
+          </div>
+          <div class="row" id="login">
+            <div class="col-sm-12 col-sm-offset-0 col-md-offset-2 col-md-8">
+              <h2 class="text-center">
+                Login
+              </h2>
+            </div>
+            <div class="col-sm-12 col-sm-offset-0 col-md-offset-2 col-md-8">
+                <div class="form-group">
+                  <label for="login-email">Email address</label>
+                  <input type="email" class="form-control" id="login-email" placeholder="Email">
+                </div>
+                <button class="btn btn-default" id="login-button">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div class="container hide-t" id="logged-in">
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 mt mb">
+              <div class="btn btn-default pull-right pointer" onclick="addHome('index', {})">Home</div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-12 hide-t to-fade errors-parent">
+              <div class="alert alert-danger errors">Unable to login</div>
+            </div>
+            <div class="col-sm-12 hide-t to-fade success-parent">
+              <div class="alert alert-success success">Success!</div>
+            </div>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/underscore.min.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+    </body>
+</html>
