@@ -8,7 +8,7 @@
         <% _.each(options, function(elem) { %>
           <div class="col-md-6 col-sm-12" style="padding:15px;border:1px solid #ccc;">
             Option <b><%- elem %></b>
-            has received <%- (stats[elem] !== undefined) ? stats[elem] : 0 %> votes.
+            has received <%- (stats[elem] !== undefined) ? Number(stats[elem]) : 0 %> votes.
           </div>
         <% }) %>
       </div>

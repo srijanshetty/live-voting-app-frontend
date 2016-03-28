@@ -49,6 +49,11 @@ $(document).ready(function() {
         $(".to-fade").fadeOut();
       }, 1000);
     }
+    if ($(".to-fade-slower").is(":visible")) {
+      window.setTimeout(function() {
+        $(".to-fade-slower").fadeOut();
+      }, 5000);
+    }
   }, 500)
 });
 
@@ -88,9 +93,10 @@ $(document).on('click',"#save-question", function(e) {
   })
 
   new_question(question, options)
-  $(document).on('question_saved', function () {
-    $(".success").html("Question Saved!")
-    $(".success-parent").show()
+  $(document).on('question_saved', function (e, data) {
+    console.log(data)
+    $(".success").html("Question Saved! Please share this key: " + data["key"])
+    $(".success-parent-longer").show()
   })
 })
 
@@ -215,7 +221,7 @@ function new_question(question, options)
       "X-Access-Key": window.profile.key
     },
     success: function(data) {
-      $(document).trigger('question_saved')
+      $(document).trigger('question_saved', data)
     }
   }).fail(function() {
     $(".errors").html("Unable to save question.")

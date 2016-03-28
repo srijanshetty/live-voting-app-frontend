@@ -52,6 +52,9 @@ body {
   padding-bottom: 99999px;
 }
 
+.select-allowed {
+    -webkit-user-select: text !important;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+}
 .hide-t {
   display: none;
 }

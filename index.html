@@ -37,18 +37,27 @@
         <div class="container">
           <div class="row">
             <div class="col-sm-12 mt mb">
+              <div class="btn btn-default pull-right pointer" onclick="window.location.reload()">Log out</div>
               <div class="btn btn-default pull-right pointer" onclick="addHome('index', {})">Home</div>
             </div>
           </div>
         </div>
         <div class="container">
-          <div class="row">
+          <div class="row select-allowed">
             <div class="col-sm-12 hide-t to-fade errors-parent">
               <div class="alert alert-danger errors">Unable to login</div>
             </div>
             <div class="col-sm-12 hide-t to-fade success-parent">
               <div class="alert alert-success success">Success!</div>
             </div>
+            <div class="col-sm-12 hide-t to-fade-slower errors-parent-longer">
+              <div class="alert alert-danger errors">Unable to login</div>
+            </div>
+            <div class="col-sm-12 hide-t to-fade-slower success-parent-longer">
+              <div class="alert alert-success success">Success!</div>
+            </div>
+          </div>
+        </div>
         <script type="text/javascript" src="js/jquery.min.js"></script>
         <script type="text/javascript" src="js/underscore.min.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
