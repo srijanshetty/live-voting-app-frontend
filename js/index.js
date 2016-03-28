@@ -6,7 +6,7 @@ function render(tmpl_name, tmpl_data = {}) {
     }
 
     if ( !render.tmpl_cache[tmpl_name] ) {
-        var tmpl_dir = '/static/templates';
+        var tmpl_dir = 'static/templates';
         var tmpl_url = tmpl_dir + '/' + tmpl_name + '.html';
 
         var tmpl_string;
