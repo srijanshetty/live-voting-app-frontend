@@ -133,6 +133,7 @@ function check_login() {
     dataType: "json",
     success: function(data) {
       window.profile = data;
+      window.profile.email = $("#login-email").val()
     }
   }).fail(function() {
     window.profile = null;
