@@ -1,17 +1,36 @@
+<%
+  window.stats = stats
+  window.options = options
+  votes_list = _.map(options, function (elem) { return ((stats[elem] === undefined) ? 0 : Number(stats[elem])); });
+  total_votes = _.reduce(votes_list, function (memo, num) { return num + memo; }, 0);
+%>
 <div class="row question" data-id="<%- qid %>">
   <div class="col-sm-12">
     <div class="panel panel-info">
       <div class="panel-heading">
         <h3><%- question %></h3>
+        <span>Total Number of Votes: <b><%- total_votes %></b></span>
       </div>
       <div class="panel-body">
         <% _.each(options, function(elem) { %>
           <div class="col-md-6 col-sm-12" style="padding:15px;border:1px solid #ccc;">
             Option <b><%- elem %></b>
-            has received <%- (stats[elem] !== undefined) ? Number(stats[elem]) : 0 %> votes.
+            has received
+            <% if (total_votes > 0) { %>
+              <%- 100.0 * ((stats[elem] !== undefined) ? Number(stats[elem]) : 0) / total_votes %>%
+            <% } else { %>
+              0%
+            <% } %>
+            votes
           </div>
         <% }) %>
       </div>
     </div>
   </div>
+  <% if (typeof next_qid !== "undefined" && next_qid !== null) { %>
+  <div class="col-sm-12 pull-right">
+    <input type="hidden" id="view-question" value="<%- next_qid %>">
+    <a class="btn btn-primary" onclick="get_question('<%- next_qid %>', '#logged-in', 'question')">Next Question</a>
+  </div>
+  <% } %>
 </div>
