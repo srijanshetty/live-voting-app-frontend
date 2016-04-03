@@ -28,6 +28,9 @@ function render(tmpl_name, tmpl_data = {}) {
 
 function addView(elem_ident, template_name, template_data) {
   $(elem_ident).html(render(template_name, template_data));
+  $.cookie("current_view", template_name);
+  $.cookie(template_name, JSON.stringify(template_data));
+  window.location.hash = "#" + template_name
 }
 
 function addHome(template_name, data = {}) {
@@ -39,6 +42,13 @@ $(document).on('click', ".go-trigger", function(e) {
   url = $(e.currentTarget).attr('go-template');
   data = $(e.currentTarget).attr('go-data');
   addHome(url, data);
+});
+
+$(window).on('hashchange', function() {
+  curr = window.location.hash.substring(1)
+  saved = $.cookie("current_view")
+  if (curr != saved)
+    addHome(curr, JSON.parse($.cookie(curr)));
 });
 
 $(document).ready(function() {
@@ -53,6 +63,10 @@ $(document).ready(function() {
       window.setTimeout(function() {
         $(".to-fade-slower").fadeOut();
       }, 5000);
+    }
+    if($(".question").length){
+      qid = $(".question").attr('data-id');
+      get_question(qid, "logged-in", "question")
     }
   }, 500)
 });
