@@ -129,7 +129,6 @@ $(document).on('click', '.q-vote', function(e) {
   vote(qid, option)
 
   $(document).on('vote_done', function() {
-    addHome("index", {})
     $(".success").html("Vote Cast!")
     $(".success-parent").show()
   })

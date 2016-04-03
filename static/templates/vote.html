@@ -14,4 +14,10 @@
       </div>
     </div>
   </div>
+  <% if (typeof next_qid !== "undefined" && next_qid !== null) { %>
+  <div class="col-sm-12 pull-right">
+    <input type="hidden" id="view-question" value="<%- next_qid %>">
+    <a class="btn btn-primary" onclick="vote_question()">Next Question</a>
+  </div>
+  <% } %>
 </div>
