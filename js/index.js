@@ -30,6 +30,7 @@ function addView(elem_ident, template_name, template_data) {
   $(elem_ident).html(render(template_name, template_data));
   $.cookie("current_view", template_name);
   $.cookie(template_name, JSON.stringify(template_data));
+  window.current_object = template_data
   window.location.hash = "#" + template_name
 }
 
@@ -37,21 +38,18 @@ function addHome(template_name, data = {}) {
   addView("#logged-in", template_name, data);
 }
 
-$(document).on('click', ".go-trigger", function(e) {
-  e.preventDefault();
-  url = $(e.currentTarget).attr('go-template');
-  data = $(e.currentTarget).attr('go-data');
-  addHome(url, data);
-});
-
 $(window).on('hashchange', function() {
   curr = window.location.hash.substring(1)
+  if (curr.length == 0)
+    return
   saved = $.cookie("current_view")
   if (curr != saved)
     addHome(curr, JSON.parse($.cookie(curr)));
 });
 
 $(document).ready(function() {
+  window.location.hash = "";
+  window.persistent_object = {};
   // Errors
   window.setInterval(function() {
     if ($(".to-fade").is(":visible")) {
@@ -108,9 +106,18 @@ $(document).on('click',"#save-question", function(e) {
 
   new_question(question, options)
   $(document).on('question_saved', function (e, data) {
-    console.log(data)
-    $(".success").html("Question Saved! Please share this key: " + data["key"])
+    curr_key = data["key"]
+
+    if (window.persistent_object["qid"] && window.persistent_object["qid"] !== curr_key){
+      update_next_qid(window.persistent_object["qid"], data["key"])
+      curr_key = window.persistent_object["qid"]
+    }
+
+    $(".success").html("Question Saved! Please share this key: " + curr_key)
     $(".success-parent-longer").show()
+
+    window.persistent_object["qid"] = data["key"]
+    $(".show-next-question-container").show()
   })
 })
 
@@ -134,6 +141,9 @@ function vote_question()
   get_question(qid, "#logged-in", "vote")
 }
 
+$(document).on('click', '.show-next-question', function() {
+  addHome('create')
+})
 
 //-- REST Queries --//
 
@@ -151,8 +161,6 @@ function check_login() {
     }
   }).fail(function() {
     window.profile = null;
-
-    //window.profile = {key: "123"};
 
     $(".errors").html("Unable to Login")
     $(".errors-parent").show()
@@ -176,19 +184,6 @@ function get_questions(ident, template_name)
   }).fail(function() {
     $(".errors").html("Unable to fetch questions.")
     $(".errors-parent").show()
-
-    /*
-    data = [
-      {
-        id: 1, question: "hello"
-      },
-      {
-        id: 2, question: "world"
-      }
-    ]
-
-    addView(ident, template_name, {list: data})
-    */
   }).always(function() {
   });
 }
@@ -208,16 +203,28 @@ function get_question(qid, ident, template_name)
   }).fail(function() {
     $(".errors").html("No question with this UID")
     $(".errors-parent").show()
+  }).always(function() {
+  });
+}
 
-    /*
-    data = {
-      id: 1, question: "hello",
-      options: ["asdf", "qwer"],
-      stats: [1,2]
+function update_next_qid(old_qid, new_qid)
+{
+  $.ajax({
+    url: REST_URL + "questions/" + old_qid,
+    method: "PUT",
+    dataType: "json",
+    data: {
+      "next_qid": new_qid
+    },
+    headers: {
+      "X-Access-Key": window.profile.key
+    },
+    success: function(data) {
+      console.log(old_qid + "," + new_qid)
     }
-
-    addView(ident, template_name, data)
-    */
+  }).fail(function() {
+    $(".errors").html("No question with this UID")
+    $(".errors-parent").show()
   }).always(function() {
   });
 }
@@ -253,8 +260,7 @@ function vote(qid, option)
     dataType: "json",
     data: {
       "qid": qid,
-      "option": option,
-      "email": profile.email
+      "option": option
     },
     headers: {
       "X-Access-Key": window.profile.key
@@ -265,7 +271,6 @@ function vote(qid, option)
   }).fail(function() {
     $(".errors").html("Unable to cast vote.")
     $(".errors-parent").show()
-    //$(document).trigger('vote_done')
   }).always(function() {
   });
 }
