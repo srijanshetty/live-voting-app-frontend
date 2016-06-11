@@ -1,4 +1,4 @@
-REST_URL = "http://128.199.251.96:5000/"
+REST_URL = "http://139.59.6.165:5000/"
 
 function render(tmpl_name, tmpl_data = {}) {
     if ( !render.tmpl_cache ) {
